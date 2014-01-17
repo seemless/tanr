@@ -1,7 +1,7 @@
 tanr
 ====
 
-a script that creates a new Flask web application given an application name. This script utilizes the directions given on the Flask website: http://flask.pocoo.org/docs/patterns/packages/
+This script creates a new Python Flask web application given an application name. This script utilizes the directions given on the Flask website: http://flask.pocoo.org/docs/patterns/packages/
 
 ##Usage
 python tanr.py app_name path/to/destination

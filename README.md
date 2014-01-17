@@ -5,3 +5,5 @@ a script that creates a new Flask web application given an application name. Thi
 
 ##Usage
 python tanr.py app_name path/to/destination
+
+If no path provided, tanr assumes that the current directory is the desired directory.

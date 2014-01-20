@@ -4,18 +4,10 @@ import argparse
 import file_texts
 
 def build_views_file(args):
-    
+    views_text = file_texts.views_text
     if args.search:
-        search_route = '''
-@app.route('/search')
-def search():
-    #assumes you have a q parameter passed to you in the request
-    query = request.args.get.('q','')
-    #your magic here
-    results = []
-    return render_template('search.html', results=results)'''
-        updated_views_text = file_texts.views_text + search_route
-        return updated_views_text
+        views_text += file_texts.search_route
+    return views_text
 
 def create_file(file_name, text, app_name):
     new_text = text.format(app_name)

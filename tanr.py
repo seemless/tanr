@@ -1,22 +1,7 @@
 import sys
 import os
 import argparse
-
-runserver_text = '''from {0} import app
-app.run(debug=True)'''
-
-init_text ='''from flask import Flask
-app = Flask(__name__)
-
-import {0}.views'''
-
-views_text = '''from flask import request, render_template
-from {0} import app
-
-@app.route('/')
-def index():
-    return 'Hello World!'
-    '''
+import file_texts
 
 def build_views_file(args):
     
@@ -29,7 +14,7 @@ def search():
     #your magic here
     results = []
     return render_template('search.html', results=results)'''
-        updated_views_text = views_text + search_route
+        updated_views_text = file_texts.views_text + search_route
         return updated_views_text
 
 def create_file(file_name, text, app_name):
@@ -51,14 +36,14 @@ def make_app(args):
     change_dir(cur_dir)
 
     #create the runserver.py file
-    create_file('runserver.py',runserver_text, app_name)
+    create_file('runserver.py',file_texts.runserver_text, app_name)
 
     #create the app module
     os.mkdir(app_name)
     change_dir(os.path.join(os.getcwd(), app_name))
 
     #create __init__.py file
-    create_file('__init__.py', init_text, app_name)
+    create_file('__init__.py', file_texts.init_text, app_name)
 
     #create views.py file
     views_text = build_views_file(args)

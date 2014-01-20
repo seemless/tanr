@@ -1,5 +1,6 @@
 import sys
 import os
+import argparse
 
 runserver_text = '''from {0} import app
 app.run(debug=True)'''
@@ -9,13 +10,27 @@ app = Flask(__name__)
 
 import {0}.views'''
 
-views_text = '''from {0} import app
+views_text = '''from flask import request, render_template
+from {0} import app
 
 @app.route('/')
 def index():
     return 'Hello World!'
     '''
 
+def build_views_file(args):
+    
+    if args.search:
+        search_route = '''
+@app.route('/search')
+def search():
+    #assumes you have a q parameter passed to you in the request
+    query = request.args.get.('q','')
+    #your magic here
+    results = []
+    return render_template('search.html', results=results)'''
+        updated_views_text = views_text + search_route
+        return updated_views_text
 
 def create_file(file_name, text, app_name):
     new_text = text.format(app_name)
@@ -27,7 +42,8 @@ def change_dir(cur):
     print "changing directories!"
     print cur
 
-def make_app(app_name):
+def make_app(args):
+    app_name = args.app_name
 
     #create the top level directory
     os.mkdir(app_name)
@@ -45,22 +61,24 @@ def make_app(app_name):
     create_file('__init__.py', init_text, app_name)
 
     #create views.py file
+    views_text = build_views_file(args)
     create_file('views.py', views_text, app_name)
 
 def main(args):
+    print args
     print os.getcwd()
-    path = None
-    app_name = args[0]
 
-    if len(args) > 1:
-        path = args[1]
-
-    if path is not None and os.path.isdir(path):
-        change_dir(path)
+    if os.path.isdir(args.path):
+        change_dir(args.path)
     
-    make_app(app_name)
+    make_app(args)
 
 if __name__=='__main__':
-    args = sys.argv[1:]
+    parser = argparse.ArgumentParser()
+    parser.add_argument('app_name', help='The name of the new app')
+    parser.add_argument('path', help='The path where you want the app to live.')
+    parser.add_argument('-s', '--search', help="include a search endpoint",
+                    action="store_true")
+    args = parser.parse_args()
     main(args)
 

@@ -1,6 +1,7 @@
 import sys
 import os
 import argparse
+from string import Template
 import file_texts
 
 def build_views_file(args):
@@ -9,8 +10,9 @@ def build_views_file(args):
         views_text += file_texts.search_route
     return views_text
 
-def create_file(file_name, text, app_name):
-    new_text = text.format(app_name)
+def create_file(file_name, text, name):
+    t = Template(text)
+    new_text = t.substitute(app_name=name)
     with open(file_name, 'w') as f:
         f.write(new_text)
 
@@ -18,6 +20,11 @@ def change_dir(cur):
     os.chdir(os.path.abspath(cur))
     print "changing directories!"
     print cur
+
+def make_templates(args):
+    if args.search:
+        create_file('search.html', file_texts.search_html, args.app_name)
+    
 
 def make_app(args):
     app_name = args.app_name
@@ -40,6 +47,12 @@ def make_app(args):
     #create views.py file
     views_text = build_views_file(args)
     create_file('views.py', views_text, app_name)
+
+    #create templates dir and files
+    temp = 'templates'
+    os.mkdir(temp)
+    change_dir(os.path.join(os.getcwd(),temp))
+    make_templates(args)
 
 def main(args):
     print args

@@ -1,13 +1,13 @@
-runserver_text = '''from {0} import app
+runserver_text = '''from ${app_name} import app
 app.run(debug=True)'''
 
-init_text ='''from flask import Flask
+init_text = '''from flask import Flask
 app = Flask(__name__)
 
-import {0}.views'''
+import {app_name}.views'''
 
 views_text = '''from flask import request, render_template
-from {0} import app
+from ${app_name} import app
 
 @app.route('/')
 def index():
@@ -23,3 +23,18 @@ def search():
     results = []
     return render_template('search.html', results=results)'''
 
+search_html = '''
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>Search ${app_name}</title>
+</head>
+<body>
+    <h1>${app_name} Search Results</h1>
+    <ul id="searchResults">
+    {% for result in results %}
+    	<li>{{ result }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>'''

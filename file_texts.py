@@ -14,6 +14,9 @@ def index():
     return 'Hello World!'
     '''
 
+jquery_tag = '''
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>'''
+
 search_route = '''
 @app.route('/search')
 def search():

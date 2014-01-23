@@ -22,7 +22,7 @@ def change_dir(cur):
     print cur
 
 def make_templates(args):
-    
+     
     create_file('index.html', file_texts.index_html, args.app_name)
 
     if args.search:

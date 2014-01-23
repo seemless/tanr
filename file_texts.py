@@ -38,3 +38,15 @@ search_html = '''
     </ul>
 </body>
 </html>'''
+
+index_html ='''
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>${app_name}</title>
+</head>
+<body>
+    <h1>Welcom to ${app_name}!</h1>
+<body>
+</html>'''
+

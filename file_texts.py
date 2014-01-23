@@ -47,6 +47,6 @@ index_html ='''
 </head>
 <body>
     <h1>Welcom to ${app_name}!</h1>
-<body>
+</body>
 </html>'''
 

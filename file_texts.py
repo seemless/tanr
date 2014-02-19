@@ -4,7 +4,7 @@ app.run(debug=True)'''
 init_text = '''from flask import Flask
 app = Flask(__name__)
 
-import {app_name}.views'''
+import ${app_name}.views'''
 
 views_text = '''from flask import request, render_template
 from ${app_name} import app
